@@ -2,11 +2,12 @@
 package com.homework.numbermazeapp.model;
 
 import com.homework.numbermazeapp.solver.Solution;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
 
-public class Puzzle {
+public class Puzzle implements Serializable {
 
     private Date recDate;
     private int[][] maze;    
@@ -21,15 +22,18 @@ public class Puzzle {
             this.dim = dim;
             this.solutions = solutions;
     }
+
+    public Puzzle(){        
+    }
     
-    public boolean createPuzzle(int n, String mazeText){
+    public boolean create(){
         //1. create int[][] maze
-        //2. solvePuzzle();
+        //2. solve();
         //3. print?
         return false;        
     }
     
-    public Collection<Solution> solvePuzzle(int n, int[][] maze){   
+    public Collection<Solution> solve(int n, int[][] maze){   
         //1. set  MazeSolver.N = n.
         //2. call MazeSolver.findPathInMaze(maze) 
         return null;

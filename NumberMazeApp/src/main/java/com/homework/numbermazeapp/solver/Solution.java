@@ -1,8 +1,9 @@
 package com.homework.numbermazeapp.solver;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class Solution {
+public class Solution implements Serializable {
 
     private LinkedList<Direction> path;
 
