@@ -22,10 +22,19 @@ public class Puzzle {
             this.solutions = solutions;
     }
     
-    public Puzzle() {
-            super();
-            // TODO Auto-generated constructor stub
+    public boolean createPuzzle(int n, String mazeText){
+        //1. create int[][] maze
+        //2. solvePuzzle();
+        //3. print?
+        return false;        
     }
+    
+    public Collection<Solution> solvePuzzle(int n, int[][] maze){   
+        //1. set  MazeSolver.N = n.
+        //2. call MazeSolver.findPathInMaze(maze) 
+        return null;
+    }    
+    
     
     public Date getRecDate() {
             return recDate;
