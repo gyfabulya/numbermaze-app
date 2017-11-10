@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:body>
+    	<h1>Szám-labirintus megoldások</h1>
+ 
+        <br />  
+        <h:dataTable value="#{puzzleController.puzzles}" var="puzzle" border="1" cellpadding="2" cellspacing="0">
+            <h:column>
+                <f:facet name="header">Időpont</f:facet>
+                <h:outputText value="#{puzzle.recDate}">
+                <f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss"/>
+                </h:outputText>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Feladvány</f:facet>
+                <h:outputText value="#{puzzle.mazeText}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Megoldások</f:facet>
+                <h:outputText value="#{puzzle.allSolutions}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Megoldások száma</f:facet>
+                <h:outputText value="#{puzzle.countSolutions}"/>
+            </h:column>   
+            <h:column>
+                <f:facet name="header">Legrövidebb megoldás</f:facet>
+                <h:outputText value="#{puzzle.shortSolution}"/>
+            </h:column>            
+        </h:dataTable>
+        <br /> 
+        <br /> 
+        <h:link outcome="create" value="Új feladvány rögzítése"/> 
+    </h:body>
+</html>

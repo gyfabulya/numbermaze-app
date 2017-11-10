@@ -1,10 +1,15 @@
 package com.homework.numbermazeapp.utils;
 
-
 public final class CsvArrayConverter {
-        
-    public static int[][] convert(String csvText) throws Exception {
-        try {            
+    
+    public CsvArrayConverter(){  
+    }        
+            
+    public int[][] convert(String csvText) throws Exception {
+        try {    
+             if (csvText.isEmpty())
+                throw new IllegalArgumentException();     
+             
              String[] lines = csvText.split("\r\n|\r|\n");
              
              int n = lines.length;             

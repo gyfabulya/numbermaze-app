@@ -1,58 +1,68 @@
-
 package com.homework.numbermazeapp.model;
 
+import com.homework.numbermazeapp.solver.MazeSolver;
 import com.homework.numbermazeapp.solver.Solution;
 import com.homework.numbermazeapp.utils.CsvArrayConverter;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Date;
 
 
-public class Puzzle implements Serializable {
+public class Puzzle implements Serializable{
 
     private Date recDate;
     private String mazeText;    
     private int[][] maze;    
-    private int dim;  //dimension of maze
-    private Collection<Solution> solutions;
-    
- 
-    private Integer mazeDim;    
+    private ArrayList<Solution> solutions;
+    private int countSolutions = 0; 
+    private String allSolutions;
+    private String shortSolution;
 
-    public Puzzle(Date recDate, int[][] maze, int dim,
-                    Collection<Solution> solutions) {
-            super();
-            this.recDate = recDate;
-            this.maze = maze;
-            this.dim = dim;
-            this.solutions = solutions;
-    }
 
-    public Puzzle(){        
+    public Puzzle(){  
+        super();
     }
-    
+        
     public boolean create() throws Exception {
-        try {
-            maze = CsvArrayConverter.convert(mazeText);
-            
+        try {     
+            this.recDate = new Date();  
+            CsvArrayConverter csvArrayConverter = new CsvArrayConverter();
+            this.maze = csvArrayConverter.convert(mazeText);   
+            MazeSolver mazeSolver = new MazeSolver();
+            this.solutions = mazeSolver.findPathInMaze(maze);            
+            setFields();            
         }
         finally {
-            
-        }
-            
-        //1. create int[][] maze
-        //2. solve();
-        //3. print?
-        return false;        
+           return true; 
+        }                
     }
-    
-    public Collection<Solution> solve(int n, int[][] maze){   
-        //1. set  MazeSolver.N = n.
-        //2. call MazeSolver.findPathInMaze(maze) 
-        return null;
-    }    
-    
-    
+                 
+    public void setFields(){
+        this.countSolutions = this.solutions.size();
+        
+        ArrayList<String> allList = new ArrayList<String>();
+        
+        if (this.countSolutions < 1 ) {
+           this.allSolutions = "Nincs megoldás";
+        } else {        
+            int minCount = Integer.MAX_VALUE;
+            
+            for (int i = 0; i < this.solutions.size(); i++) {
+                
+                if (this.solutions.get(i) != null ) {
+                    
+                    allList.add(this.solutions.get(i).print() + "  ");
+                    if(this.solutions.get(i).getCount() < minCount) {
+                        minCount = this.solutions.get(i).getCount();
+                        this.shortSolution = this.solutions.get(i).print();
+                    } 
+                }
+            }   
+            
+            this.setAllSolutions(allList.toString());
+        }
+    }   
+                 
     public Date getRecDate() {
             return recDate;
     }
@@ -69,19 +79,11 @@ public class Puzzle implements Serializable {
             this.maze = maze;
     }
     
-    public int getDim() {
-            return dim;
-    }
-    
-    public void setDim(int dim) {
-            this.dim = dim;
-    }
-    
-    public Collection<Solution> getSolutions() {
+    public ArrayList<Solution> getSolutions() {
             return solutions;
     }
     
-    public void setSolutions(Collection<Solution> solutions) {
+    public void setSolutions(ArrayList<Solution> solutions) {
             this.solutions = solutions;
     }	
 
@@ -93,14 +95,28 @@ public class Puzzle implements Serializable {
         this.mazeText = mazeText;
     }
 
-    public Integer getMazeDim() {
-        return mazeDim;
+    public int getCountSolutions() {
+        return countSolutions;
     }
 
-    public void setMazeDim(Integer mazeDim) {
-        this.mazeDim = mazeDim;
+    public void setCountSolutions(int countSolutions) {
+        this.countSolutions = countSolutions;
     }
-    
-    
-    
+
+    public String getAllSolutions() {
+        return allSolutions;
+    }
+
+    public void setAllSolutions(String allSolutions) {
+        this.allSolutions = allSolutions;
+    }
+
+    public String getShortSolution() {
+        return shortSolution;
+    }
+
+    public void setShortSolution(String shortSolution) {
+        this.shortSolution = shortSolution;
+    }
+                  
 }

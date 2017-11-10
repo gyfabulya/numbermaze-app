@@ -1,6 +1,7 @@
 package com.homework.numbermazeapp.beans;
 
 import com.homework.numbermazeapp.model.Puzzle;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Lock;
@@ -13,8 +14,7 @@ import javax.ejb.Startup;
  */    
 
 @Singleton
-@Startup
-public class PuzzleBean {
+public class PuzzleBean implements Serializable {
     
     private List<Puzzle> puzzles = new ArrayList<Puzzle>();
         
@@ -27,10 +27,9 @@ public class PuzzleBean {
     }
     
     @Lock(LockType.WRITE)   
-    public void createPuzzle(Puzzle puzzle){
+    public void createPuzzle(Puzzle puzzle) throws Exception{ 
         if (puzzle.create()){
             puzzles.add(puzzle);       
-        }
-    }    
-   
+        }           
+    }
 }

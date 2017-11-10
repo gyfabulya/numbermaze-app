@@ -8,18 +8,23 @@
 
     <h:body>
     	<h1>Szám-labirintus rögzítése</h1>
+        <br />         
         <h:panelGroup id="messagePanel" layout="block">
-            <h:messages errorStyle="color: red" infoStyle="color: red" layout="table"/>
+            <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
         </h:panelGroup>
+        <br />  
+        <h:outputLabel value="Kérjük adja meg az új feladványt:" />   
+        <br />  
+        <br />  
         <h:form>
-              <h:outputLabel value="Kérjük adja meg az új feladványt:" for="mazeText" />              
-              <br /> 
-              <h:inputTextarea id="mazeText" value="#{puzzleController.mazeText}" cols="10" rows="8" required="true" > 
+            <h:inputTextarea id="mazeText" value="#{puzzleController.puzzle.mazeText}" cols="16" rows="8" required="true" > 
                   <f:validator validatorId="csvValidator" /> 
               </h:inputTextarea>
               <br />              
             <br />
             <h:commandButton action="#{puzzleController.create()}" value="Mentés"/>
-        </h:form>
+        </h:form>        
+        <br />
+        <h:link outcome="list" value="Rögzített feladványok listázása"/>         
     </h:body>
 </html>

@@ -1,29 +1,25 @@
-
 package com.homework.numbermazeapp.jsf;
 
 import com.homework.numbermazeapp.beans.PuzzleBean;
 import com.homework.numbermazeapp.model.Puzzle;
 import java.io.Serializable;
+import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.inject.Named;
+import javax.faces.context.FacesContext;
 
-//@Named(value = "puzzleController")
-//@RequestScoped
+
 @ManagedBean(name = "puzzleController")
 @SessionScoped
 public class PuzzleController implements Serializable {
     
-    private String mazeText;
-
     private Puzzle puzzle;
     
     @EJB
     private PuzzleBean ejbPuzzleBean;
-       
-        
+               
     public PuzzleController() {
     }
     
@@ -42,37 +38,42 @@ public class PuzzleController implements Serializable {
         this.ejbPuzzleBean = ejbPuzzleBean;
     }
                 
-    public String getMazeText() {
-        return mazeText;        
-    }
-
-    public void setMazeText(String mazeText) {
-        this.mazeText = mazeText;
-    }
-
     public PuzzleBean getEjbPuzzleBean() {
-        return ejbPuzzleBean;
+        if (ejbPuzzleBean == null) {
+            ejbPuzzleBean = new PuzzleBean();
+        }
+       return ejbPuzzleBean;      
     }
     
-    public String prepareCreate() {
-        //puzzle = new Puzzle();
-        return "Create";
+    public String prepareCreate() {        
+        puzzle = new Puzzle();
+        return "";
     }        
     
     public String create() {
-        try {
-            puzzle.setMazeText(mazeText);
+        try {            
             getEjbPuzzleBean().createPuzzle(puzzle);
-            //JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources//Bundle").getString("CustomerCreated"));
+            addSuccessMessage("Megoldások: " + puzzle.getAllSolutions());
             return prepareCreate();            
             
         } catch (Exception e) {
-            // JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources//Bundle").getString("PersistenceErrorOccured"));
+            addErrorMessage("Nem érvényes szám-labirintus CSV formátum!");
             return null;
-        }
- 
-            
-        
+        }                     
+    }
+    
+    public List<Puzzle> getPuzzles() {
+        return getEjbPuzzleBean().getPuzzles();
+    }    
+    
+    public static void addSuccessMessage(String msg) {
+        FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg, msg);
+        FacesContext.getCurrentInstance().addMessage("successInfo", facesMsg);
+    }  
+    
+    public static void addErrorMessage(String msg) {
+        FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
+        FacesContext.getCurrentInstance().addMessage(null, facesMsg);
     }
     
 }
