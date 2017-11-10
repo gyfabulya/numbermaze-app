@@ -3,8 +3,12 @@ package com.homework.numbermazeapp.solver;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public final class MazeSolver {
+    
+    private static final Logger LOGGER = Logger.getLogger(MazeSolver.class.getName());  
 	
     private int dim; // dimension of maze
     private ArrayList<Solution> solutions;
@@ -12,13 +16,11 @@ public final class MazeSolver {
     public MazeSolver(){  
     }
     
-    private void printPath(LinkedList<Position<Integer, Integer>> path) {  
+    private void logPath(LinkedList<Position<Integer, Integer>> path) {  
         for (Position<Integer, Integer> position : path) {
-          System.out.print("(" + position.getRow() + ", " + position.getCol() + ") -> " );
+          LOGGER.log( Level.INFO, "Path x: {0} ", position.getRow());
+          LOGGER.log( Level.INFO, "Path y: {0}  -> ", position.getCol());
         }
-        System.out.print( "END");
-        System.out.println();
-
     }
 
     // is a valid position or not.
@@ -36,7 +38,7 @@ public final class MazeSolver {
         
         // If we have reached the target position.        
         if (curr.getRow() == this.dim-1  && curr.getCol() == this.dim-1 ){
-            //printPath(path);            
+            logPath(path);            
             this.solutions.add(solution.clone());        
             return;
         }

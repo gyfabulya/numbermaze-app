@@ -6,9 +6,13 @@ import com.homework.numbermazeapp.utils.CsvArrayConverter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Puzzle implements Serializable{
+    
+    private static final Logger LOGGER = Logger.getLogger(Puzzle.class.getName());   
 
     private Date recDate;
     private String mazeText;    
@@ -30,7 +34,8 @@ public class Puzzle implements Serializable{
             this.maze = csvArrayConverter.convert(mazeText);   
             MazeSolver mazeSolver = new MazeSolver();
             this.solutions = mazeSolver.findPathInMaze(maze);            
-            setFields();            
+            setFields();
+            LOGGER.log( Level.INFO, "Puuzle solved. Solution number {0} ",  countSolutions); 
         }
         finally {
            return true; 
