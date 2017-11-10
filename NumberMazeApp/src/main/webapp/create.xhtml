@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:body>
+    	<h1>Szám-labirintus rögzítése</h1>
+        <h:panelGroup id="messagePanel" layout="block">
+            <h:messages errorStyle="color: red" infoStyle="color: red" layout="table"/>
+        </h:panelGroup>
+        <h:form>
+              <h:outputLabel value="Kérjük adja meg az új feladványt:" for="mazeText" />              
+              <br /> 
+              <h:inputTextarea id="mazeText" value="#{puzzleController.mazeText}" cols="10" rows="8" required="true" > 
+                  <f:validator validatorId="csvValidator" /> 
+              </h:inputTextarea>
+              <br />              
+            <br />
+            <h:commandButton action="#{puzzleController.create()}" value="Mentés"/>
+        </h:form>
+    </h:body>
+</html>

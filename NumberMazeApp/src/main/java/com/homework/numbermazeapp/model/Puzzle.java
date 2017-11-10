@@ -2,6 +2,7 @@
 package com.homework.numbermazeapp.model;
 
 import com.homework.numbermazeapp.solver.Solution;
+import com.homework.numbermazeapp.utils.CsvArrayConverter;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -10,9 +11,13 @@ import java.util.Date;
 public class Puzzle implements Serializable {
 
     private Date recDate;
+    private String mazeText;    
     private int[][] maze;    
     private int dim;  //dimension of maze
     private Collection<Solution> solutions;
+    
+ 
+    private Integer mazeDim;    
 
     public Puzzle(Date recDate, int[][] maze, int dim,
                     Collection<Solution> solutions) {
@@ -26,7 +31,15 @@ public class Puzzle implements Serializable {
     public Puzzle(){        
     }
     
-    public boolean create(){
+    public boolean create() throws Exception {
+        try {
+            maze = CsvArrayConverter.convert(mazeText);
+            
+        }
+        finally {
+            
+        }
+            
         //1. create int[][] maze
         //2. solve();
         //3. print?
@@ -71,5 +84,23 @@ public class Puzzle implements Serializable {
     public void setSolutions(Collection<Solution> solutions) {
             this.solutions = solutions;
     }	
+
+    public String getMazeText() {
+        return mazeText;
+    }
+
+    public void setMazeText(String mazeText) {
+        this.mazeText = mazeText;
+    }
+
+    public Integer getMazeDim() {
+        return mazeDim;
+    }
+
+    public void setMazeDim(Integer mazeDim) {
+        this.mazeDim = mazeDim;
+    }
+    
+    
     
 }
